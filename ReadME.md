@@ -2,6 +2,8 @@
 
 Neste projeto, desenvolvi uma calculadora simples com apenas as 4 operações básicas de somar, subtrair, multiplicar e dividir.  
 
+Veja o projeto aqui: [Calculadora JavaScript](https://jalexandrevm.github.io/fcc-frontend-js-calculator/)
+
 Dentre todas as tecnologias disponíveis, acabei escolhendo usar diretamente o HTML mais o BootStrap (CSS) e um pouco de JavaScript.  
 
 Sei que poderia ter feito tudo usando o JavaScript com o React para criar todos os componentes e posteriormente posicioná-los com o SASS, mais o Redux para usar um repositório único com os valores e as operações adicionadas para depois calcular a senteça.  
