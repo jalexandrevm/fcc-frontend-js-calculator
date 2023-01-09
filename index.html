@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <title>JS Calculator - Alex Marques</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    .borda-full {
+      border: 1px solid;
+      font-weight: bolder;
+      font-size: x-large;
+    }
+
+    .teclas-light {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .teclas-dark {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+
+    .teclas-darkier {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  </style>
+
+</head>
+
+<body class="vh-100">
+  <div id="" class="d-flex flex-column text-center vh-100">
+    <!-- Aqui temos um header -->
+    <div class="flex-grow-0 bg-danger text-info">
+      <h1>Calculadora JavaScript</h1>
+    </div>
+    <!-- Aqui temos o conteúdo -->
+    <div class="flex-grow-1 m-0 justify-content-center align-items-center row vw-100">
+      <!-- Deixei a Calculadora centralizada -->
+      <div id="calculator" class="p-2" style="border: 5px solid; width: 400px; border-radius: 5px;">
+        <!-- Display da Calculadora -->
+        <div class="card flex-column-reverse text-end bg-dark mb-2 pe-2" style="height: 50px;">
+          <span class="d-inline-flex text-white p-0 m-0 justify-content-end">
+            <span id="signal" class="m-0 p-0"></span>
+            <div id="display" class="m-0 p-0">0</div>
+          </span>
+          <div id="disp-hist" class="text-secondary" style="font-size: small;"></div>
+        </div>
+        <!-- Bloco das teclas da Calculadora -->
+        <div class="classic-calc borda-full">
+          <!-- Primeira linha das teclas -->
+          <div class="d-flex" style="height: auto;">
+            <div id="clear" onclick="clearAll()" class="col-6 p-2 borda-full teclas-darkier">AC</div>
+            <div id="divide" onclick="addOper('/')" class="col-3 p-2 borda-full teclas-dark">/</div>
+            <div id="multiply" onclick="addOper('*')" class="col-3 p-2 borda-full teclas-dark">X</div>
+          </div>
+          <!-- Segunda linha das teclas -->
+          <div class="d-flex">
+            <div id="seven" onclick="addNumber('7')" class="col-3 p-2 borda-full teclas-light">7</div>
+            <div id="eight" onclick="addNumber('8')" class="col-3 p-2 borda-full teclas-light">8</div>
+            <div id="nine" onclick="addNumber('9')" class="col-3 p-2 borda-full teclas-light">9</div>
+            <div id="subtract" onclick="addOper('-')" class="col-3 p-2 borda-full teclas-dark">-</div>
+          </div>
+          <!-- Terceira linha das teclas -->
+          <div class="d-flex">
+            <div id="four" onclick="addNumber('4')" class="col-3 p-2 borda-full teclas-light">4</div>
+            <div id="five" onclick="addNumber('5')" class="col-3 p-2 borda-full teclas-light">5</div>
+            <div id="six" onclick="addNumber('6')" class="col-3 p-2 borda-full teclas-light">6</div>
+            <div id="add" onclick="addOper('+')" class="col-3 p-2 borda-full teclas-dark">+</div>
+          </div>
+          <!-- Esta tem as 2 últimas linhas -->
+          <div class="d-flex">
+            <div class="col-9">
+              <!-- Quarta linha das teclas -->
+              <div class="d-flex">
+                <div id="one" onclick="addNumber('1')" class="col-4 p-2 borda-full teclas-light">1</div>
+                <div id="two" onclick="addNumber('2')" class="col-4 p-2 borda-full teclas-light">2</div>
+                <div id="three" onclick="addNumber('3')" class="col-4 p-2 borda-full teclas-light">3</div>
+              </div>
+              <!-- Quinta linha das teclas -->
+              <div class="d-flex">
+                <div id="zero" onclick="addNumber('0')" class="col-8 p-2 borda-full teclas-light">0</div>
+                <div id="decimal" onclick="addDecimal()" class="col-4 p-2 borda-full teclas-light">.</div>
+              </div>
+            </div>
+            <!-- Esta coluna é 1 linha só -->
+            <div class="col-3">
+              <div class="d-flex flex-column justify-content-center h-100">
+                <div id="equals" onclick="calculate()"
+                  class="row flex-grow-1 m-0 p-0 align-items-center borda-full teclas-darkier justify-content-center">
+                  =
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Aqui temos um footer -->
+    <div class="flex-grow-0 pb-2 bg-dark-subtle">
+      <q class="text-primary fw-bolder">by Alex Marques</q>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script>
+    calculate = () => {
+      const dispHist = document.getElementById('disp-hist');
+      const dispElem = document.getElementById('display');
+      const signalElem = document.getElementById('signal');
+      if (dispHist.innerText !== '') {
+        const expressao = dispHist.innerText + signalElem.innerText + dispElem.innerText;
+        const resultado = eval(expressao);
+        dispHist.innerText = expressao + '=' + resultado;
+        dispElem.innerText = (resultado);
+        signalElem.innerText = '';
+      }
+    }
+    addOper = (oper) => {
+      const dispHist = document.getElementById('disp-hist');
+      const dispElem = document.getElementById('display');
+      const signalElem = document.getElementById('signal');
+
+      if ((parseFloat(dispElem.innerText) === 0) && (dispHist.innerText.length === 0)) {
+        if (oper !== '-') {
+          // console.log('nada muda');
+        } else {
+          // console.log('sinal muda');
+          const signal = document.getElementById('signal');
+          if (signal.innerText.length === 0) {
+            signal.innerText = '-';
+          } else {
+            signal.innerText = '';
+          }
+        }
+      } else if ((parseFloat(dispElem.innerText) !== 0) && (dispHist.innerText.length === 0)) {
+        // console.log('adiciona histórico');
+        dispHist.innerText = signalElem.innerText + dispElem.innerText + oper;
+        dispElem.innerText = 0;
+        signalElem.innerText = '';
+      } else if ((parseFloat(dispElem.innerText) !== 0) && (dispHist.innerText.length !== 0)) {
+        if (dispHist.innerText.includes('=')) {
+          dispHist.innerText = '';
+        }
+        // console.log('adiciona histórico');
+        dispHist.innerText = dispHist.innerText + signalElem.innerText + dispElem.innerText + oper;
+        dispElem.innerText = 0;
+        signalElem.innerText = '';
+      } else if ((parseFloat(dispElem.innerText) === 0) && (dispHist.innerText.length !== 0)) {
+        if (dispHist.innerText.includes('=')) {
+          dispHist.innerText = '';
+        }
+        const lastOper = dispHist.innerText.charAt(dispHist.innerText.length - 1);
+        if ((oper !== '-') || ((oper === '-') && ((lastOper === '+')))) {
+          dispHist.innerText = dispHist.innerText.substring(0, (dispHist.innerText.length - 1)) + oper;
+          signalElem.innerText = '';
+        } else {
+          if (signalElem.innerText.length === 0) {
+            signalElem.innerText = '-';
+          } else {
+            signalElem.innerText = '';
+          }
+        }
+      }
+    }
+    clearAll = () => {
+      const dispHist = document.getElementById('disp-hist');
+      const dispElem = document.getElementById('display');
+      const signalElem = document.getElementById('signal');
+      dispElem.innerHTML = 0;
+      dispHist.innerText = '';
+      signalElem.innerText = '';
+    }
+    addDecimal = () => {
+      const dispElem = document.getElementById('display');
+      if (dispElem.innerText.includes('.')) {
+
+      } else {
+        dispElem.innerText = dispElem.innerText.concat(".");
+      }
+    }
+    addNumber = (num) => {
+      const dispElem = document.getElementById('display');
+
+      if (dispElem.innerText.includes('.')) {
+        dispElem.innerText = dispElem.innerText.concat(num);
+      } else {
+        dispElem.innerText = parseFloat(dispElem.innerText.concat(num));
+      }
+    }
+  </script>
+
+</body>
+
+</html>
